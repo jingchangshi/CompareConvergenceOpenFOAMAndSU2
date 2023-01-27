@@ -1,0 +1,21 @@
+set term pngcairo size 1536,768
+set output "Compare_OpenFOAM-SU2_NACA0012-Res.png"
+# set logscale y
+# set format y '%.1e'
+set yrange [-16:2]
+# set y2range [0.0:0.2]
+set ytics nomirror
+set y2tics nomirror
+set ylabel "log10(Res)"
+set y2label "log10(Cl-FinalCl)"
+
+plot '/home/jcshi/OpenFOAM_Project/cases/airFoil2D/lin_relTol0.1_absTol1e-9/logs/p_0' using 1:(log10($2)) w l ls 1 dt 1 t 'OF-P', \
+     '/home/jcshi/OpenFOAM_Project/cases/airFoil2D/lin_relTol0.1_absTol1e-9/logs/Ux_0' using 1:(log10($2)) w l ls 2 dt 1 t 'OF-Ux', \
+     '/home/jcshi/OpenFOAM_Project/cases/airFoil2D/lin_relTol0.1_absTol1e-9/logs/nuTilda_0' using 1:(log10($2)) w l ls 3 dt 1 t 'OF-nuTilda', \
+     '/home/jcshi/OpenFOAM_Project/cases/airFoil2D/lin_relTol0.1_absTol1e-9/postProcessing/forceCoeffs1/0/coefficient.dat' skip 13 using 1:(log10(abs($5-2.11650389648430)+1E-13)) w l ls 4 dt 1 t 'OF-Cd' axes x1y2, \
+     'lin_relTol1e-1_cfl1e2_dim/history.csv' skip 1 using ($1+1):6 w l ls 1 dt 2 t 'SU2-RhoE', \
+     'lin_relTol1e-1_cfl1e2_dim/history.csv' skip 1 using ($1+1):4 w l ls 2 dt 2 t 'SU2-RhoU', \
+     'lin_relTol1e-1_cfl1e2_dim/history.csv' skip 1 using ($1+1):7 w l ls 3 dt 2 t 'SU2-nuTilda', \
+     'lin_relTol1e-1_cfl1e2_dim/history.csv' skip 1 using ($1+1):(log10(abs($9-1.234950591527)+1E-13)) w l ls 4 dt 2 t 'SU2-Cl'
+
+

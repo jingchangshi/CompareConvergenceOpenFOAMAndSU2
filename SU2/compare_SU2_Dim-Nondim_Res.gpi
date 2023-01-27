@@ -1,0 +1,21 @@
+set term pngcairo size 1536,768
+set output "Compare_SU2_NACA0012_Dim-Nondim_Res.png"
+# set logscale y
+# set format y '%.1e'
+set yrange [-16:2]
+# set y2range [0.0:0.2]
+# set ytics nomirror
+# set y2tics nomirror
+set ylabel "log10(Res)"
+# set y2label "log10(Cl-FinalCl)"
+
+plot 'lin_relTol1e-1_cfl1e2_nondim/history.csv' skip 1 using ($1+1):6 w l ls 1 dt 1 t 'Nondim-RhoE', \
+     'lin_relTol1e-1_cfl1e2_nondim/history.csv' skip 1 using ($1+1):4 w l ls 2 dt 1 t 'Nondim-RhoU', \
+     'lin_relTol1e-1_cfl1e2_nondim/history.csv' skip 1 using ($1+1):7 w l ls 3 dt 1 t 'Nondim-nuTilda', \
+     'lin_relTol1e-1_cfl1e2_nondim/history.csv' skip 1 using ($1+1):3 w l ls 4 dt 1 t 'Nondim-Rho', \
+     'lin_relTol1e-1_cfl1e2_dim/history.csv' skip 1 using ($1+1):6 w l ls 1 dt 2 t 'Dim-RhoE', \
+     'lin_relTol1e-1_cfl1e2_dim/history.csv' skip 1 using ($1+1):4 w l ls 2 dt 2 t 'Dim-RhoU', \
+     'lin_relTol1e-1_cfl1e2_dim/history.csv' skip 1 using ($1+1):7 w l ls 3 dt 2 t 'Dim-nuTilda', \
+     'lin_relTol1e-1_cfl1e2_dim/history.csv' skip 1 using ($1+1):3 w l ls 4 dt 2 t 'Dim-Rho'
+
+

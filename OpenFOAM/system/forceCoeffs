@@ -1,0 +1,57 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2212                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+
+forceCoeffs1
+{
+    type            forceCoeffs;
+    libs            (forces);
+    writeControl    timeStep;
+    writeInterval   50;
+    writeFields     false;
+
+    patches         (walls);
+    p               p;
+    U               U;
+    rho             rhoInf;      // Indicates incompressible
+    log             true;
+    rhoInf          2.12649;           // Required when rho = rhoInf
+    pRef            183127;
+    liftDir         (-0.17364817766693033 0.984807753012208 0);
+    dragDir         ( 0.984807753012208 0.17364817766693033 0);
+    CofR            (0.25 0 0);  // Axle midpoint on ground
+    pitchAxis       (0 0 1);
+    // magUInf         52.07966733764723;
+    magUInf         1.0;
+    lRef            1;          // Wheelbase length
+    Aref            1.99895;          // Estimated
+    porosity        off;
+}
+
+
+// binField1
+// {
+//     type                    binField;
+//     libs                    (fieldFunctionObjects);
+//     binModel                singleDirectionUniformBin;
+//     fields                  (forceCoeff);
+//     patches                 (body);
+//     decomposePatchValues    yes;
+//     CofR                    ${..forceCoeffs1.CofR};
+//     cellZones               (porousZone);
+
+//     binData
+//     {
+//         nBin        20;          // output data into 20 bins
+//         direction   (1 0 0);     // bin direction
+//         cumulative  yes;
+//     }
+//     writeControl            writeTime;
+// }
+
+
+// ************************************************************************* //
